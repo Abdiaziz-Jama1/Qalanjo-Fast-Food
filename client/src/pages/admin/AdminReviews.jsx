@@ -21,8 +21,9 @@ export default function AdminReviews() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Reviews</h1>
+      <h1 className="text-xl sm:text-2xl font-bold mb-6">Reviews</h1>
       <div className="bg-white rounded-xl border overflow-hidden">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-gray-50"><tr><th className="text-left px-4 py-3 font-medium">User</th><th className="text-left px-4 py-3 font-medium">Food</th><th className="text-left px-4 py-3 font-medium">Rating</th><th className="text-left px-4 py-3 font-medium">Comment</th><th className="text-left px-4 py-3 font-medium">Status</th><th className="text-right px-4 py-3 font-medium">Actions</th></tr></thead>
           <tbody>{reviews.map(review => (
@@ -39,6 +40,7 @@ export default function AdminReviews() {
             </tr>
           ))}</tbody>
         </table>
+        </div>
         {reviews.length === 0 && <p className="text-center text-gray-500 py-8">No reviews yet</p>}
       </div>
     </div>

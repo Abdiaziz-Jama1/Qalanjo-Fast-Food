@@ -20,8 +20,9 @@ export default function AdminUsers() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Users</h1>
+      <h1 className="text-xl sm:text-2xl font-bold mb-6">Users</h1>
       <div className="bg-white rounded-xl border overflow-hidden">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-gray-50"><tr><th className="text-left px-4 py-3 font-medium">User</th><th className="text-left px-4 py-3 font-medium">Phone</th><th className="text-left px-4 py-3 font-medium">Role</th><th className="text-left px-4 py-3 font-medium">Joined</th><th className="text-right px-4 py-3 font-medium">Actions</th></tr></thead>
           <tbody>{users.map(user => (
@@ -39,6 +40,7 @@ export default function AdminUsers() {
             </tr>
           ))}</tbody>
         </table>
+        </div>
       </div>
     </div>
   );

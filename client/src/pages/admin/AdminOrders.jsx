@@ -23,8 +23,8 @@ export default function AdminOrders() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Orders</h1>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold">Orders</h1>
         <select value={filter} onChange={e => setFilter(e.target.value)} className="border rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary outline-none">
           <option value="">All Status</option>
           {statusOptions.map(s => <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>)}

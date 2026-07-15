@@ -79,8 +79,8 @@ export default function AdminFoods() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Foods</h1>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold">Foods</h1>
         <button onClick={() => openModal()} className="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg flex items-center gap-2"><FiPlus /> Add Food</button>
       </div>
       <div className="bg-white rounded-xl border overflow-hidden">
@@ -127,7 +127,7 @@ export default function AdminFoods() {
           </div>
           <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Food Name" required className="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none" />
           <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} placeholder="Description" rows={2} className="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none" />
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <input type="number" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} placeholder="Price" required step="0.01" className="border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none" />
             <input type="number" value={form.discountPrice} onChange={e => setForm({ ...form, discountPrice: e.target.value })} placeholder="Discount Price" step="0.01" className="border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none" />
             <input type="number" value={form.preparationTime} onChange={e => setForm({ ...form, preparationTime: e.target.value })} placeholder="Prep Time (min)" className="border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none" />

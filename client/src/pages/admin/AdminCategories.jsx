@@ -36,11 +36,12 @@ export default function AdminCategories() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Categories</h1>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold">Categories</h1>
         <button onClick={() => openModal()} className="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg flex items-center gap-2"><FiPlus /> Add Category</button>
       </div>
       <div className="bg-white rounded-xl border overflow-hidden">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-gray-50"><tr><th className="text-left px-4 py-3 font-medium">Name</th><th className="text-left px-4 py-3 font-medium">Description</th><th className="text-left px-4 py-3 font-medium">Order</th><th className="text-right px-4 py-3 font-medium">Actions</th></tr></thead>
           <tbody>{categories.map(cat => (
@@ -52,6 +53,7 @@ export default function AdminCategories() {
             </tr>
           ))}</tbody>
         </table>
+        </div>
       </div>
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} title={editing ? 'Edit Category' : 'Add Category'}>
         <form onSubmit={handleSubmit} className="space-y-4">
