@@ -26,9 +26,9 @@ export default function AdminSettings() {
 
   return (
     <div>
-      <h1 className="text-xl sm:text-2xl font-bold mb-6">Restaurant Settings</h1>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-white rounded-xl border p-6 space-y-4">
+      <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Restaurant Settings</h1>
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+        <div className="bg-white rounded-xl border p-4 sm:p-6 space-y-4">
           <h3 className="font-semibold text-gray-900">General Info</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div><label className="text-sm text-gray-600 block mb-1">Restaurant Name</label><input value={settings.restaurantName} onChange={e => handleChange('restaurantName', e.target.value)} className="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none" /></div>
@@ -45,7 +45,7 @@ export default function AdminSettings() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border p-6">
+        <div className="bg-white rounded-xl border p-4 sm:p-6">
           <h3 className="font-semibold text-gray-900 mb-4">Opening Hours</h3>
           <div className="space-y-3">
             {settings.openingHours?.map((h, i) => (
@@ -62,7 +62,7 @@ export default function AdminSettings() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border p-6">
+        <div className="bg-white rounded-xl border p-4 sm:p-6">
           <h3 className="font-semibold text-gray-900 mb-4">Social Links</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div><label className="text-sm text-gray-600 block mb-1">Facebook</label><input value={settings.socialLinks?.facebook || ''} onChange={e => handleChange('socialLinks', { ...settings.socialLinks, facebook: e.target.value })} className="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none" /></div>
@@ -71,7 +71,7 @@ export default function AdminSettings() {
           </div>
         </div>
 
-        <button type="submit" className="bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 transition-colors"><FiSave /> Save Settings</button>
+        <button type="submit" className="bg-primary hover:bg-primary-dark text-white px-6 sm:px-8 py-3 rounded-lg font-semibold flex items-center gap-2 transition-colors text-sm sm:text-base"><FiSave /> Save Settings</button>
       </form>
     </div>
   );

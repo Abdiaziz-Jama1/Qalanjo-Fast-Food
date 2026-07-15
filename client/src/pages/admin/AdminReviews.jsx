@@ -22,26 +22,50 @@ export default function AdminReviews() {
   return (
     <div>
       <h1 className="text-xl sm:text-2xl font-bold mb-6">Reviews</h1>
-      <div className="bg-white rounded-xl border overflow-hidden">
+
+      {/* Desktop table */}
+      <div className="bg-white rounded-xl border overflow-hidden hidden sm:block">
         <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50"><tr><th className="text-left px-4 py-3 font-medium">User</th><th className="text-left px-4 py-3 font-medium">Food</th><th className="text-left px-4 py-3 font-medium">Rating</th><th className="text-left px-4 py-3 font-medium">Comment</th><th className="text-left px-4 py-3 font-medium">Status</th><th className="text-right px-4 py-3 font-medium">Actions</th></tr></thead>
-          <tbody>{reviews.map(review => (
-            <tr key={review._id} className="border-t hover:bg-gray-50">
-              <td className="px-4 py-3">{review.user?.name}</td>
-              <td className="px-4 py-3 text-gray-500">{review.food?.name}</td>
-              <td className="px-4 py-3"><StarRating rating={review.rating} /></td>
-              <td className="px-4 py-3 max-w-xs truncate">{review.comment}</td>
-              <td className="px-4 py-3"><span className={`px-2 py-1 rounded-full text-xs font-medium ${review.isApproved ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>{review.isApproved ? 'Approved' : 'Pending'}</span></td>
-              <td className="px-4 py-3 text-right">
-                {!review.isApproved && <button onClick={() => approve(review._id)} className="p-1.5 hover:bg-green-50 text-green-500 rounded-lg mr-1"><FiCheck /></button>}
-                <button onClick={() => remove(review._id)} className="p-1.5 hover:bg-red-50 text-red-500 rounded-lg"><FiTrash2 /></button>
-              </td>
-            </tr>
-          ))}</tbody>
-        </table>
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50"><tr><th className="text-left px-4 py-3 font-medium">User</th><th className="text-left px-4 py-3 font-medium">Food</th><th className="text-left px-4 py-3 font-medium">Rating</th><th className="text-left px-4 py-3 font-medium">Comment</th><th className="text-left px-4 py-3 font-medium">Status</th><th className="text-right px-4 py-3 font-medium">Actions</th></tr></thead>
+            <tbody>{reviews.map(review => (
+              <tr key={review._id} className="border-t hover:bg-gray-50">
+                <td className="px-4 py-3">{review.user?.name}</td>
+                <td className="px-4 py-3 text-gray-500">{review.food?.name}</td>
+                <td className="px-4 py-3"><StarRating rating={review.rating} /></td>
+                <td className="px-4 py-3 max-w-xs truncate">{review.comment}</td>
+                <td className="px-4 py-3"><span className={`px-2 py-1 rounded-full text-xs font-medium ${review.isApproved ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>{review.isApproved ? 'Approved' : 'Pending'}</span></td>
+                <td className="px-4 py-3 text-right">
+                  {!review.isApproved && <button onClick={() => approve(review._id)} className="p-1.5 hover:bg-green-50 text-green-500 rounded-lg mr-1"><FiCheck /></button>}
+                  <button onClick={() => remove(review._id)} className="p-1.5 hover:bg-red-50 text-red-500 rounded-lg"><FiTrash2 /></button>
+                </td>
+              </tr>
+            ))}</tbody>
+          </table>
         </div>
         {reviews.length === 0 && <p className="text-center text-gray-500 py-8">No reviews yet</p>}
+      </div>
+
+      {/* Mobile cards */}
+      <div className="sm:hidden space-y-3">
+        {reviews.length === 0 && <p className="text-center text-gray-500 py-8">No reviews yet</p>}
+        {reviews.map(review => (
+          <div key={review._id} className="bg-white rounded-xl border p-4">
+            <div className="flex items-start justify-between gap-2 mb-2">
+              <div className="min-w-0">
+                <p className="font-medium text-sm truncate">{review.user?.name}</p>
+                <p className="text-xs text-gray-500 truncate">{review.food?.name}</p>
+              </div>
+              <span className={`px-2 py-0.5 rounded-full text-xs font-medium shrink-0 ${review.isApproved ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>{review.isApproved ? 'Approved' : 'Pending'}</span>
+            </div>
+            <div className="mb-2"><StarRating rating={review.rating} /></div>
+            {review.comment && <p className="text-sm text-gray-600 line-clamp-2">{review.comment}</p>}
+            <div className="flex justify-end gap-2 mt-3 pt-3 border-t">
+              {!review.isApproved && <button onClick={() => approve(review._id)} className="p-2 hover:bg-green-50 text-green-500 rounded-lg text-sm flex items-center gap-1"><FiCheck /> Approve</button>}
+              <button onClick={() => remove(review._id)} className="p-2 hover:bg-red-50 text-red-500 rounded-lg text-sm flex items-center gap-1"><FiTrash2 /> Delete</button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

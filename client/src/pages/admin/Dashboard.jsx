@@ -27,25 +27,25 @@ export default function Dashboard() {
 
   return (
     <div>
-      <h1 className="text-xl sm:text-2xl font-bold mb-6">Dashboard</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Dashboard</h1>
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         {cards.map(card => (
-          <div key={card.label} className="bg-white rounded-xl p-5 border">
+          <div key={card.label} className="bg-white rounded-xl p-3 sm:p-5 border">
             <div className="flex items-center justify-between">
-              <div><p className="text-sm text-gray-500">{card.label}</p><p className="text-2xl font-bold text-gray-900 mt-1">{card.value}</p></div>
-              <div className={`${card.color} text-white p-3 rounded-lg`}>{card.icon}</div>
+              <div><p className="text-xs sm:text-sm text-gray-500">{card.label}</p><p className="text-lg sm:text-2xl font-bold text-gray-900 mt-0.5 sm:mt-1">{card.value}</p></div>
+              <div className={`${card.color} text-white p-2 sm:p-3 rounded-lg`}>{card.icon}</div>
             </div>
           </div>
         ))}
       </div>
-      <div className="bg-white rounded-xl border p-5">
+      <div className="bg-white rounded-xl border p-4 sm:p-5">
         <h3 className="font-semibold text-gray-900 mb-4">Recent Orders</h3>
         {recentOrders.length === 0 ? <p className="text-gray-500 text-sm">No orders yet.</p> : (
           <div className="space-y-3">
             {recentOrders.map(order => (
               <div key={order._id} className="flex items-center justify-between py-2 border-b last:border-0">
-                <div><p className="text-sm font-medium">{order.user?.name || 'Guest'}</p><p className="text-xs text-gray-500">{new Date(order.createdAt).toLocaleDateString()}</p></div>
-                <div className="text-right"><p className="font-semibold text-primary">{formatPrice(order.total)}</p><p className="text-xs text-gray-500 capitalize">{order.status}</p></div>
+                <div className="min-w-0 flex-1"><p className="text-sm font-medium truncate">{order.user?.name || 'Guest'}</p><p className="text-xs text-gray-500">{new Date(order.createdAt).toLocaleDateString()}</p></div>
+                <div className="text-right shrink-0 ml-3"><p className="font-semibold text-primary text-sm sm:text-base">{formatPrice(order.total)}</p><p className="text-xs text-gray-500 capitalize">{order.status}</p></div>
               </div>
             ))}
           </div>
