@@ -45,6 +45,7 @@ app.use('/api/reviews', require('../server/routes/reviews'));
 app.use('/api/users', require('../server/routes/users'));
 app.use('/api/settings', require('../server/routes/settings'));
 app.use('/api/upload', require('../server/routes/upload'));
+app.use('/api/seed', require('../server/routes/seed'));
 
 app.get('/api/health', (_, res) => res.json({ status: 'ok' }));
 

@@ -1,25 +1,24 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-dotenv.config();
-
+const express = require('express');
+const router = express.Router();
 const User = require('../models/User');
 const Category = require('../models/Category');
 const Food = require('../models/Food');
 const Settings = require('../models/Settings');
 
-const seed = async () => {
+router.get('/', async (req, res) => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('MongoDB connected for seeding');
+    if (req.query.key !== process.env.SEED_SECRET) {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
+
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@qalanjo.com';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
 
     await User.deleteMany();
     await Category.deleteMany();
     await Food.deleteMany();
 
-    const adminEmail = process.env.ADMIN_EMAIL ;
-    const adminPassword = process.env.ADMIN_PASSWORD ;
-
-    const admin = await User.create({
+    await User.create({
       name: 'Admin',
       email: adminEmail,
       password: adminPassword,
@@ -27,7 +26,7 @@ const seed = async () => {
       phone: '+256700000000',
     });
 
-    const customer = await User.create({
+    await User.create({
       name: 'John Doe',
       email: 'john@example.com',
       password: 'customer123',
@@ -45,7 +44,7 @@ const seed = async () => {
       { name: 'Drinks', description: 'Refreshing beverages', sortOrder: 7 },
     ]);
 
-    const foods = [
+    await Food.insertMany([
       { name: 'Garlic Bread', description: 'Crispy bread with garlic butter and herbs', price: 9000, category: categories[0]._id, ingredients: ['Bread', 'Garlic', 'Butter', 'Herbs'], tags: ['vegetarian', 'starter'], preparationTime: 10, isFeatured: true },
       { name: 'Mozzarella Sticks', description: 'Golden fried cheese with marinara sauce', price: 12000, category: categories[0]._id, ingredients: ['Mozzarella', 'Breadcrumbs', 'Marinara'], tags: ['vegetarian', 'fried'], preparationTime: 12 },
       { name: 'Chicken Wings', description: 'Crispy wings tossed in buffalo sauce', price: 15000, category: categories[0]._id, ingredients: ['Chicken', 'Buffalo Sauce', 'Celery', 'Blue Cheese'], tags: ['spicy', 'popular'], preparationTime: 15, isFeatured: true },
@@ -61,12 +60,10 @@ const seed = async () => {
       { name: 'Tiramisu', description: 'Classic Italian coffee-flavored dessert', price: 12000, category: categories[5]._id, ingredients: ['Mascarpone', 'Coffee', 'Ladyfingers', 'Cocoa'], tags: ['dessert', 'coffee'], preparationTime: 5 },
       { name: 'Fresh Lemonade', description: 'Hand-squeezed lemonade with mint', price: 5000, category: categories[6]._id, ingredients: ['Lemon', 'Sugar', 'Mint', 'Water'], tags: ['drink', 'refreshing'], preparationTime: 5 },
       { name: 'Mango Smoothie', description: 'Blended mango with yogurt and honey', price: 8000, category: categories[6]._id, ingredients: ['Mango', 'Yogurt', 'Honey', 'Ice'], tags: ['drink', 'fruit'], preparationTime: 5 },
-    ];
+    ]);
 
-    await Food.insertMany(foods);
-
-    let settings = await Settings.findOne();
-    if (!settings) {
+    const existingSettings = await Settings.findOne();
+    if (!existingSettings) {
       await Settings.create({
         restaurantName: 'Qalanjo Fast Food',
         tagline: 'Fast food, served fresh to your door',
@@ -87,14 +84,10 @@ const seed = async () => {
       });
     }
 
-    console.log('Seed complete!');
-    console.log(`Admin: ${adminEmail} / ${adminPassword}`);
-    console.log('Customer: john@example.com / customer123');
-    process.exit(0);
+    res.json({ message: 'Database seeded successfully', admin: { email: adminEmail, password: adminPassword } });
   } catch (error) {
-    console.error('Seed error:', error);
-    process.exit(1);
+    res.status(500).json({ message: 'Seed failed', error: error.message });
   }
-};
+});
 
-seed();
+module.exports = router;
